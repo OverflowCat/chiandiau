@@ -4,24 +4,19 @@
   "YuMincho",
 ))
 
-#let tone-mapping = (
-  "jyutping": (none, 55, 35, 33, 21, 23, 22),
-)
-
-#let tone-mapper = (pron, scheme) => {
-  let mapping = tone-mapping.at(scheme)
-  if type(mapping) == array {
+#let to-scheme = scheme => {
+  assert(type(scheme) == array, message: "scheme must be an array")
+  return pron => {
     let digit = pron.match(regex("\d+"))
     if digit != none {
       let index = int(digit.text)
-      mapping.at(index)
+      scheme.at(index)
     } else {
-      mapping.first()
+      scheme.first()
     }
-  } else {
-    mapping(pron)
   }
 }
+
 #let tone(pron, conter, width: 1em, pron-size: .4em, pron-font: "SF Compact Rounded", frac: .18em, debug: false) = {
   assert(width > 0em, message: "width must be greater than 0em")
   set line(length: width, stroke: rgb("ccc"))
@@ -70,7 +65,7 @@
 
 #let cd(
   pairs,
-  scheme,
+  scheme: none,
   dir: direction.btt,
   pron-font: "HarmonyOS Sans",
   pron-size: .4em,
@@ -85,9 +80,12 @@
   for pair in pairs {
     let pron = pair.at(1)
     if pron != none {
-      let width = measure(
-        text(pron, font: pron-font, size: pron-size),
-      ).width * .92
+      let width = (
+        measure(
+          text(pron, font: pron-font, size: pron-size),
+        ).width
+          * .92
+      )
       if width > widest {
         widest = width
       }
@@ -100,6 +98,11 @@
       zi
       continue
     }
+    assert(
+      pair.len() == 3 or type(scheme) == function,
+      message: "Either provide the tone conter in the pair, or provide a scheme function to convert the pron to the tone conter",
+    )
+    let conter = pair.at(2, default: scheme(pron))
     let s = stack(dir: dir, spacing: .2em)[
       #set align(center)
       #box(zi, width: widest)
@@ -107,7 +110,7 @@
       #set align(center)
       #box(width: widest, tone(
         pron,
-        tone-mapper(pron, scheme),
+        conter,
         width: widest,
         pron-size: pron-size,
         pron-font: pron-font,
@@ -144,18 +147,28 @@
   pairs
 }
 
-#let yue = (
-  "zh": "明月幾時有？把酒問青天。不知天上宮闕，今夕是何年。",
-  "jyutping": "ming4 jyut6 gei2 si4 jau5 baa2 zau2 man6 cing1 tin1 bat1 zi1 tin1 soeng6 gung1 kyut3, gam1 zik6 si6 ho4 nin4",
+#let yue-jyutping-example = (
+  "明月幾時有？把酒問青天。不知天上宮闕，今夕是何年。",
+  "ming4 jyut6 gei2 si4 jau5 baa2 zau2 man6 cing1 tin1 bat1 zi1 tin1 soeng6 gung1 kyut3, gam1 zik6 si6 ho4 nin4",
 )
 
-#let wuu = ()
 
-#let pairs = to-pairs(yue.zh, yue.jyutping)
-// #pairs
+// #set text(lang: "nan", script: "Latn")
 
-#cd(
-  pairs,
-  "jyutping",
-  // debug: true
-)
+#let yue-jyutping = (zh, pron) => {
+  let pairs = to-pairs(zh, pron)
+  cd(
+    pairs,
+    scheme: to-scheme((none, 55, 35, 33, 21, 23, 22)),
+  )
+}
+
+#yue-jyutping(..yue-jyutping-example)
+
+#let nan-tailo = (zh, pron) => {
+  let pairs = to-pairs(zh, pron)
+  cd(
+    pairs,
+    scheme: to-scheme((none, 55, 35, 33, 21, 23, 22)),
+  )
+}
