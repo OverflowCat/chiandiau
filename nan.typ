@@ -1,4 +1,4 @@
-#import "util.typ": to-sandhi-pairs, cd
+#import "util.typ": cd, to-sandhi-pairs
 
 #let tone-map = (
   // Acute Accent (e.g., á) - U+0301
@@ -140,13 +140,32 @@
       i = j + 1
     }
   }
-  // prons.push(pron.slice(i))
   prons.push(pron.clusters().slice(i).join(""))
+  let res = (
+    prons
+      .enumerate()
+      .find(((i, p)) => {
+        if p.starts-with("-") {
+          return true
+        }
+        false
+      })
+  )
+
+  let tone-index = (
+    if none == res {
+      prons.len() // Last one, index is len() - 1
+    } else {
+      res.at(0) // Last one before the item that starts with "-"
+    }
+      - 1
+  )
+
   prons
     .enumerate()
     .map(((i, p)) => {
       let tone = nan-tone-extractor(p)
-      let sandhi = i < prons.len() - 1
+      let sandhi = i < tone-index
       let conter = nan-tone-map.at(tone).at(if sandhi { 1 } else { 0 })
       (p, conter)
     })

@@ -11,7 +11,7 @@
   }
 }
 
-#let tone(pron, conter, width: 1em, pron-size: .4em, pron-font: "jf open 粉圓 2.1", frac: .18em, debug: true) = {
+#let tone(pron, conter, width: 1em, pron-size: .4em, pron-font: "jf open 粉圓 2.1", frac: .18em, debug: false) = {
   assert(width > 0em, message: "width must be greater than 0em")
   set line(length: width, stroke: rgb("ccc"))
 
@@ -35,6 +35,7 @@
     c = underline(c)
   }
   if conter.len() == 2 and conter.at(0) == conter.at(1) {
+    // if the two digits are the same, use the first one
     conter = conter.at(0)
   }
   if conter.len() == 1 {
@@ -66,7 +67,7 @@
   dir: direction.btt,
   pron-font: "jf open 粉圓 2.1",
   pron-size: .4em,
-  debug: true,
+  debug: false,
 ) = context {
   set box(
     fill: if debug { rgb("#32966214") } else { rgb(0, 0, 0, 0) },
