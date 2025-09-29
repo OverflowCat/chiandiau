@@ -3,6 +3,15 @@
   "jf open 粉圓 2.1",
   "YuMincho",
 ))
+#show heading: set text(.7em)
+#let trans = c => {
+  show par: set block(spacing: .6em)
+  set align(right)
+  set text(.5em, lang: "en")
+  c
+}
+
+=== `yue-jyutping`
 
 #import "yue.typ": yue-jyutping
 
@@ -12,6 +21,18 @@
 )
 
 #yue-jyutping(..yue-jyutping-example)
+
+#trans[
+  When will the full moon appear?
+
+  Wine cup in hand, I ask the sky.
+
+  I do not know what time of year
+
+  'T would be tonight in the palace on high.
+]
+
+=== `nan-tailo`
 
 #import "nan.typ": nan-tailo
 
@@ -32,4 +53,28 @@
 
 #nan-tailo(..nan-tailo-examples.at(1))
 
-#let wuu = ()
+#trans[
+  This once-in-a-lifetime judgment on earth,
+
+  With every fiber of my being, I pray you survive.
+
+  The defiled past—it all comes flooding back to me now.
+
+  Will you hold my hand tight, at the very end?
+]
+
+=== `wuu-wugniu`
+
+#let wuu = (
+  "新冠防護勿放鬆，上海市民有腔調",
+  "1shin-guoe 6vaon-wu 8veq-faon-son 6zaon-he 6zy-min 6yeu 1chian-diau",
+)
+
+#import "wuu.typ": wuu-wugniu
+#wuu-wugniu(..wuu)
+
+#trans[
+  Let’s stay vigilant of our COVID measures.
+
+  Let us Shanghainese citizens stay super.
+]

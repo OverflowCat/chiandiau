@@ -82,14 +82,6 @@
   tone-map.insert(char, 9)
 }
 
-#let nan-tailo = (zh, pron) => {
-  let pairs = to-pairs(zh, pron)
-  cd(
-    pairs,
-    scheme: to-scheme((none, 55, 35, 33, 21, 23, 22)),
-  )
-}
-
 // #let r = "|'aaaa-bbb-ccc--ddd--eee.".matches(regex("(^\P{L}+)?-?\p{L}+-?(\P{L}+$)?"))
 
 #let nan-tone-extractor = pron => {
@@ -172,7 +164,7 @@
 }
 
 #let nan-tailo = (zh, pron) => {
-  let pairs = to-sandhi-pairs(zh, pron).map(pair => {
+  let pairs = to-sandhi-pairs(zh, pron).map(pair /* (zh, pron) */ => {
     let characters = pair.at(0).clusters()
     if pair.at(1) != none {
       let prons = nan-sandhi-converter(pair.at(1))
