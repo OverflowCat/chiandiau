@@ -4,6 +4,7 @@
     let digit = pron.match(regex("\d+"))
     if digit != none {
       let index = int(digit.text)
+      assert(index < scheme.len(), message: "index " + str(index) + " out of range")
       scheme.at(index)
     } else {
       scheme.first()
@@ -49,6 +50,40 @@
       let deg = calc.atan(h / w)
       box(move(rotate(-deg, c, origin: left + bottom, reflow: false), dy: dy))
     }
+  } else if conter.len() == 3 {
+    // find a position to split the pron
+
+    // find the minimal width diff
+    context {
+      let diff-width(a, b) = {
+        measure(a).width - measure(b).width
+      }
+      let split-position = 0
+      let min-diff = diff-width("", pron)
+      for i in range(1, pron.len()) {
+        let diff = diff-width(pron.slice(0, i), pron.slice(i))
+        if calc.abs(diff) < calc.abs(min-diff) {
+          min-diff = diff
+          split-position = i
+        }
+      }
+
+      assert(pron.len() > 2 and split-position > 0 and split-position < pron.len(), message: "split-position must be greater than 0 and less than pron length")
+      // box 1
+      if split-position > 0 {
+        let w1 = measure(pron.slice(0, split-position)).width
+        let h1 = (int(conter.at(0)) - 1.5) * -frac
+        let deg1 = calc.atan(h1.to-absolute() / w1.to-absolute())
+        box(move(rotate(-deg1, c, origin: left + bottom, reflow: false), dy: dy))
+      }
+      // box 2
+      if split-position < pron.len() {
+        let w2 = measure(pron.slice(split-position)).width
+        let h2 = (int(conter.at(1)) - 1.5) * -frac
+        let deg2 = calc.atan(h2.to-absolute() / w2.to-absolute())
+        box(move(rotate(-deg2, c, origin: left + bottom, reflow: false), dy: dy))
+      }
+    }
   }
 }
 
@@ -67,6 +102,7 @@
   dir: direction.btt,
   pron-font: "jf open 粉圓 2.1",
   pron-size: .4em,
+  monospace: true,
   debug: false,
 ) = context {
   set box(
@@ -74,21 +110,23 @@
     stroke: if debug { rgb(250, 50, 0) + .6pt } else { none },
   )
   // set text(borde: if debug { rgb(50, 50, 250) + .5pt } else { none })
-  let widest = measure("水").width
-  for pair in pairs {
-    if (type(pair) != array) {
-      continue
-    }
-    let pron = pair.at(1)
-    if pron != none {
-      let width = (
-        measure(
-          text(pron, font: pron-font, size: pron-size),
-        ).width
-          * .92
-      )
-      if width > widest {
-        widest = width
+  let widest = auto
+  if monospace {
+    widest = measure("水").width
+    for pair in pairs {
+      if (type(pair) != array) {
+        continue
+      }
+      let pron = pair.at(1)
+      if pron != none {
+        let width = (
+          measure(
+            text(pron, font: pron-font, size: pron-size),
+          ).width
+        )
+        if width > widest {
+          widest = width
+        }
       }
     }
   }
