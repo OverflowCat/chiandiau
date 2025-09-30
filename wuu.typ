@@ -1,9 +1,6 @@
 #import "util.typ": cd, to-sandhi-pairs
 #set page("a6", margin: 1cm)
 
-/*
-注1：清声母去声式的二字调变化存在特例，阴去后接少部分阴去、阳去时，连续变调模式同阴平式的二字调（55＋21）。这是因为中古汉语的浊上归入去声。
-*/
 #let shanghainese-tone-map = (
   "1": ((53,), (55, 21), (55, 33, 21), (55, 33, 33, 21), (55, 33, 33, 33, 21)),
   "5": ((34,), (33, 44), (33, 55, 21), (33, 55, 33, 21), (33, 55, 33, 33, 21)),
@@ -12,7 +9,10 @@
   "8": ((12,), (11, 23), (11, 22, 23), (11, 22, 22, 23), (22, 55, 33, 33, 21)),
 )
 
-#let wugniu-sandhi-converter = pron => {
+#let wugniu-sandhi-converter(
+  pron,
+  tone-map: shanghainese-tone-map,
+) = {
   if (pron == none) {
     return ((none, none),)
   }
@@ -25,7 +25,7 @@
     .map(
       ((i, p)) => if i > 0 { "-" + p } else { p },
     )
-  let tone-schemes = shanghainese-tone-map.at(tone-char)
+  let tone-schemes = tone-map.at(tone-char)
   let tone-scheme-char-count = calc.min(prons.len(), tone-schemes.len())
   let tone-scheme = tone-schemes.at(tone-scheme-char-count - 1)
   while prons.len() > tone-scheme.len() {
@@ -47,7 +47,12 @@
     })
 } /* returns (pron, conter) */
 
-#let wuu-wugniu = (zh, pron) => {
+#let wuu-wugniu(
+  zh,
+  pron,
+  tone-map: shanghainese-tone-map,
+  ..attrs,
+) = {
   let pairs = to-sandhi-pairs(zh, pron).map(pair /* (zh, pron) */ => {
     let characters = pair.at(0).clusters()
     if pair.at(1) != none {
@@ -58,6 +63,6 @@
     }
   })
   for ci in pairs {
-    cd(ci)
+    cd(ci, ..attrs)
   }
 }

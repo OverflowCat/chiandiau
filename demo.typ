@@ -1,5 +1,6 @@
 #set page("a5", margin: .9cm, height: auto)
 #set text(2em, lang: "zh", font: "jf open 粉圓 2.1")
+#import "lib.typ": *
 
 #show heading: c => {
   pagebreak(weak: true)
@@ -24,7 +25,6 @@
 
 === `yue-jyutping`
 
-#import "yue.typ": yue-jyutping
 
 #let yue-jyutping-example = (
   "明月幾時有？把酒問青天。不知天上宮闕，今夕是何年。",
@@ -45,7 +45,6 @@
 
 === `wuu-wugniu`
 
-#import "wuu.typ": wuu-wugniu
 
 #wuu-wugniu(
   "箇束花一生　逃弗出四季忒狹\n但高塔　總要塌", // （終）
@@ -62,7 +61,6 @@
 
 === `nan-tailo`
 
-#import "nan.typ": nan-tailo
 
 #let nan-tailo-examples = (
   (
@@ -93,7 +91,6 @@
 
 // === `cmn-pinyin`
 
-// #import "cmn.typ": cmn-pinyin
 // #let cmn = (
 //   "歸去來兮田園將蕪胡不歸既自以心為形役奚惆悵而獨悲",
 //   "gui1 qu4 lai2 xi1! tian2 yuan2 jiang1 wu2 hu2 bu4 gui1? ji4 zi4 yi3 xin1 wei2 xing2 yi4, xi1 chou2 chang4 er2 du2 bei1?",
@@ -114,7 +111,6 @@
 
 === `cmn-cyuc-congqin`
 
-#import "cmn.typ": cmn-cyuc-sicuan
 
 #[
   #show regex("(.+)/(.+)"): it => {

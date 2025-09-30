@@ -1,7 +1,7 @@
 {
   "name": "chiandiau",
   "version": "0.1.0",
-  "description": "",
+  "description": "Display tone-based jumpy pronunciations in Typst",
   "main": "lib.typ",
   "scripts": {
     "c": "sh compile.sh"
