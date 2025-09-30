@@ -103,12 +103,16 @@
   pairs,
   scheme: none,
   dir: direction.btt,
-  pron-font: "jf open 粉圓 2.1",
+  pron-font: none,
   pron-size: .4em,
   width: "monospace",
   pron-style: none,
   debug: false,
 ) = context {
+  let pron-font = pron-font
+  if pron-font == none {
+    pron-font = text.font
+  }
   set box(
     fill: if debug { rgb("#32966214") } else { rgb(0, 0, 0, 0) },
     stroke: if debug { rgb(250, 50, 0) + .6pt } else { none },

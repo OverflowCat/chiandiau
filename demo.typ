@@ -45,7 +45,6 @@
 
 === `wuu-wugniu`
 
-
 #wuu-wugniu(
   "箇束花一生　逃弗出四季忒狹\n但高塔　總要塌", // （終）
   "8geh-soh7\55 1ho 7ih-san 6dau-veh-tsheh\21 5sy-ci 7theh 8ghaeh 6de 1kau-thaeh 1tson5-iau 7thaeh",
@@ -112,11 +111,7 @@
 === `cmn-cyuc-congqin`
 
 
-#[
-  #show regex("(.+)/(.+)"): it => {
-    cmn-cyuc-sicuan(..it.text.split("/").map(t => t.trim()), width: 1.2em)
-  }
-
+#easy-split(cmn-cyuc-sicuan, splitter: "/")[
   映階碧草自春色，
   /yin4 jiai1 bi2 cao3 zi4 cuen1 xie2
 
