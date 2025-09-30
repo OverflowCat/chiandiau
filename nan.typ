@@ -163,7 +163,7 @@
     })
 }
 
-#let nan-tailo = (zh, pron) => {
+#let nan-tailo = (zh, pron, ..attrs) => {
   let pairs = to-sandhi-pairs(zh, pron).map(pair /* (zh, pron) */ => {
     let characters = pair.at(0).clusters()
     if pair.at(1) != none {
@@ -174,6 +174,6 @@
     }
   })
   for ci in pairs {
-    cd(ci)
+    cd(ci, ..attrs)
   }
 }

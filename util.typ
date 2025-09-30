@@ -106,6 +106,7 @@
   pron-font: "jf open 粉圓 2.1",
   pron-size: .4em,
   width: "monospace",
+  pron-style: none,
   debug: false,
 ) = context {
   set box(
@@ -160,6 +161,9 @@
       #box(zi, width: widest)
     ][
       #set align(center)
+      #if type(pron-style) == function {
+        pron = pron-style(pron)
+      }
       #box(width: widest, tone(
         pron,
         conter,

@@ -8,11 +8,12 @@
   53,
 )
 
-#let cmn-pinyin(zh, pron) = {
+#let cmn-pinyin(zh, pron, ..attrs) = {
   let pairs = to-pairs(zh, pron)
   cd(
     pairs,
     scheme: to-scheme(cmn-pinyin-scheme),
+    ..attrs
   )
 }
 
@@ -51,7 +52,7 @@
 }
 
 /* Southwestern Mandarin, Síchuānhuá tōngyóng pīnyīn */
-#let cmn-xghu-tongyong = (zh, pron, scheme: "Chengdu") => {
+#let cmn-xghu-tongyong = (zh, pron, scheme: "Chengdu", ..attrs) => {
   if type(scheme) == str {
     scheme = cmn-xghu-schemes.at(scheme)
   }
@@ -59,5 +60,6 @@
   cd(
     pairs,
     scheme: to-scheme((none, ..scheme)),
+    ..attrs
   )
 }
