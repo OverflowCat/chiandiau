@@ -1,6 +1,5 @@
-// typst compile fig1.typ fig1.svg
 #set page(margin: .5cm, width: 7.7cm, height: auto)
-#import "lib.typ": trans, wuu-wugniu
+#import "demo.typ": trans, wuu-wugniu
 #{
   set text(font: "錦華明朝體C")
   wuu-wugniu(
@@ -15,4 +14,3 @@
 
   Uphold model behavior as Shanghainese citizens.
 ]
-

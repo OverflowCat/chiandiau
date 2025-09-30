@@ -1,1 +1,6 @@
 *.pdf
+*.svg
+*.png
+*.webp
+
+node_modules

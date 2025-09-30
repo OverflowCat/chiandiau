@@ -13,13 +13,13 @@ wuu-wugniu(
 )
 ```
 
-![Example sentence](/fig1.svg)
+![Example sentence](https://github.com/user-attachments/assets/36268cb0-2df5-4101-abed-d170ea80ccbb)
 
 ## Example
 
 … of all available pre-defined writing systems.
 
-![](./fig-example-1.svg)
-![](./fig-example-2.svg)
-![](./fig-example-3.svg)
-![](./fig-example-4.svg)
+![](https://github.com/user-attachments/assets/5bccb6b6-a94c-4ae3-ae43-abc3cef57182)
+![](https://github.com/user-attachments/assets/fdf172e2-3bac-4027-b392-eccbeb050803)
+![](https://github.com/user-attachments/assets/8cca2287-b4b4-4266-9fb8-a31a7fad11b1)
+![](https://github.com/user-attachments/assets/f6fd050d-e16c-41d8-80cc-1ccbb1d01c42)

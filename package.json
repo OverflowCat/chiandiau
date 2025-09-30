@@ -1,0 +1,22 @@
+{
+  "name": "chiandiau",
+  "version": "0.1.0",
+  "description": "",
+  "main": "lib.typ",
+  "scripts": {
+    "c": "sh compile.sh"
+  },
+  "keywords": [
+    "typst",
+    "chinese",
+    "linguistics"
+  ],
+  "author": {
+    "name": "OverflowCat",
+    "url": "about.overflow.cat"
+  },
+  "license": "ISC",
+  "packageManager": "pnpm@10.17.1",
+  "dependencies": {
+  }
+}
