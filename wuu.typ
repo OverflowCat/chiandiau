@@ -11,12 +11,12 @@
   "7": ((55,), (33, 44), (33, 55, 21), (33, 55, 33, 21), (33, 55, 33, 33, 21)),
   "8": ((12,), (11, 23), (11, 22, 23), (11, 22, 22, 23), (22, 55, 33, 33, 21)),
 )
-#let shanghainese-tone-scheme-max-len = 5
 
 #let wugniu-sandhi-converter = pron => {
   if (pron == none) {
     return ((none, none),)
   }
+
   let tone-char = pron.first()
   // pron = pron.slice(1)
   let prons = pron
@@ -26,14 +26,25 @@
       ((i, p)) => if i > 0 { "-" + p } else { p },
     )
   let tone-schemes = shanghainese-tone-map.at(tone-char)
-  let tone-scheme-char-count = calc.min(prons.len(), shanghainese-tone-scheme-max-len)
+  let tone-scheme-char-count = calc.min(prons.len(), tone-schemes.len())
   let tone-scheme = tone-schemes.at(tone-scheme-char-count - 1)
   while prons.len() > tone-scheme.len() {
     // dup -2nd item and insert it before -1st item
     tone-scheme.insert(-2, tone-scheme.at(-1))
   }
   assert(tone-scheme.len() == prons.len(), message: "tone-scheme length must be equal to prons length")
-  prons.zip(tone-scheme)
+
+  prons
+    .zip(tone-scheme)
+    .map(((p, c)) => {
+      let splitted = p.split("\\")
+      if (splitted.len() > 1) {
+        // manually marked, e.g. 8ge\11
+        let conter = splitted.pop()
+        return (splitted.join("\\"), conter)
+      }
+      (p, c)
+    })
 } /* returns (pron, conter) */
 
 #let wuu-wugniu = (zh, pron) => {

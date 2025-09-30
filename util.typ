@@ -13,6 +13,9 @@
 }
 
 #let tone(pron, conter, width: 1em, pron-size: .4em, pron-font: "jf open 粉圓 2.1", frac: .18em, debug: false) = {
+  if conter == none {
+    return pron
+  }
   assert(width > 0em, message: "width must be greater than 0em")
   set line(length: width, stroke: rgb("ccc"))
 
@@ -102,7 +105,7 @@
   dir: direction.btt,
   pron-font: "jf open 粉圓 2.1",
   pron-size: .4em,
-  monospace: true,
+  width: "monospace",
   debug: false,
 ) = context {
   set box(
@@ -111,7 +114,7 @@
   )
   // set text(borde: if debug { rgb(50, 50, 250) + .5pt } else { none })
   let widest = auto
-  if monospace {
+  if width == "monospace" {
     widest = measure("水").width
     for pair in pairs {
       if (type(pair) != array) {
@@ -129,6 +132,8 @@
         }
       }
     }
+  } else if width != none {
+    widest = width
   }
 
   for pair in pairs {
