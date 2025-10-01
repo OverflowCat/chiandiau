@@ -13,10 +13,14 @@
 #wuu-wugniu(
   "新冠防护勿放松，上海市民有腔调",
   "1shin-kuoe 6vaon-wu 6veq8-faon-son 6zaon-he 6zy-min 6yeu 1chian-diau",
+
+  // optional parameters
+  pron-font: ..., // custom font (name / list) for pronunciation
+  // see below for more
 )
 ```
 
-![](https://github.com/user-attachments/assets/36268cb0-2df5-4101-abed-d170ea80ccbb)
+![](https://github.com/user-attachments/assets/50bcec4c-c0f3-41b7-867e-3aca45999423)
 
 ## Examples
 
@@ -86,10 +90,23 @@ Here conter means the Chao tone number like $1$, $35$, $42$, etc.
   debug: false, // show border of boxes
 ```
 
-## Contributing
+## Roadmap
+
+- [ ] 3-digit tone numbers
+- [ ] Tone sandhi by character
+- [ ] More built-in schemes
+- [ ] Backgrounds for tone boxes
+
+### Contributing
 
 Feedback, bugfix, or new scheme support are all welcome!
 
-## Licensing
+## Acknowledgement
 
-Apache 2.0.
+* [Hambaanglaang Cantonese](https://hambaanglaang.hk/about-us-2/) and [粵典](https://words.hk/base/about/) for Graphical Jyutping.
+* [Subaru ad Astra Pø](https://github.com/subaruphoe) (@subaruphoe) for providing and checking Wugniu.
+* justfont for [jf open-huninn](https://github.com/justfont/open-huninn-font/), which supports Pe̍h-ōe-jī letters.
+
+## License
+
+The source code is released under the Apache 2.0 License.

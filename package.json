@@ -4,7 +4,7 @@
   "description": "Display tone-based jumpy pronunciations in Typst",
   "main": "lib.typ",
   "scripts": {
-    "c": "sh compile.sh"
+    "compile": "sh compile.sh"
   },
   "keywords": [
     "typst",
