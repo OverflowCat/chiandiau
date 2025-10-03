@@ -9,6 +9,8 @@
   "8": ((12,), (11, 23), (11, 22, 23), (11, 22, 22, 23), (22, 55, 33, 33, 21)),
 )
 
+#let fallback-tone-map = ((0,), (0, 0), (0, 0, 0), (0, 0, 0, 0), (0, 0, 0, 0, 0))
+
 #let wugniu-sandhi-converter(
   pron,
   tone-map: shanghainese-tone-map,
@@ -25,7 +27,7 @@
     .map(
       ((i, p)) => if i > 0 { "-" + p } else { p },
     )
-  let tone-schemes = tone-map.at(tone-char)
+  let tone-schemes = tone-map.at(tone-char, default: fallback-tone-map)
   let tone-scheme-char-count = calc.min(prons.len(), tone-schemes.len())
   let tone-scheme = tone-schemes.at(tone-scheme-char-count - 1)
   while prons.len() > tone-scheme.len() {
