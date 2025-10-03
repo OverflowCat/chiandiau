@@ -7,7 +7,7 @@
 
 #import "cmn.typ": cmn-cyuc-sicuan, cmn-pinyin, cmn-xghu-tongyong
 #import "nan.typ": nan-tailo
-#import "wuu.typ": wuu-wugniu
+#import "wuu/wuu.typ": wuu-wugniu
 #import "yue.typ": yue-jyutping
 
 #let easy-split(function, c, splitter: "|", splitter-regex: none, ..attrs) = {

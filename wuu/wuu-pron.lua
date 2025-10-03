@@ -1,3 +1,6 @@
+-- Adapted from https://en.wiktionary.org/wiki/Module:wuu-pron/data
+-- CC BY-SA 4.0
+
 json = require("cjson")
 
 local data = {}
@@ -1315,66 +1318,57 @@ data.tone_contours = {
 
 
 
--- 转换 tone_contours 中的字符串值为数字
+-- 转换时避免在遍历中修改原表，构造新表再替换
 local function convert_tone_contours_to_numbers()
     for dialect, contours in pairs(data.tone_contours) do
+        local new_contours = {}
         for key, value in pairs(contours) do
             if type(value) == "string" then
                 if value == "" then
                     -- 空字符串保持不变
                     contours[key] = ""
                 else
-					local first_char = string.sub(key, 1, 1)
-					local last_char = string.sub(key, -1)
-                    local has_digit_start = string.match(first_char, "%d")
-                    local not_word = string.match(last_char, "%a")
-                    if has_digit_start and not not_word then
-                        -- 获取第一个字符作为数字
-                        local digit = tonumber(first_char)
-						if digit == nil then
-							error(first_char)
-						end
+                    local first_char = string.sub(key, 1, 1)
+                    local last_char = string.sub(key, -1)
+                    local has_digit_start = string.match(first_char, "%d") ~= nil
+                    local ends_with_letter = string.match(last_char, "%a") ~= nil
+
+                    local new_key = key
+                    -- if has_digit_start and not ends_with_letter then
+                        -- local digit = tonumber(first_char)
                         -- 计算原始值中空格的数量
-                        local space_count = 0
-                        for i = 1, #value do
-                            if string.sub(value, i, i) == " " then
-                                space_count = space_count + 1
-                            end
-                        end
-                        
-                        -- 检查 digit + 1 是否等于空格数量
-                        if digit - 1 == space_count then
-                            -- 删除 key 开头的第一个数字字符
-                            local new_key = string.sub(key, 2)
-                            -- 更新 contours 表，删除旧的 key，添加新的 key
-                            contours[new_key] = contours[key]
-                            contours[key] = nil
-                            key = new_key  -- 更新当前处理的 key
-                        else
-                            error("key '" .. key .. " = " .. value .. "' 的空格数量 (" .. space_count .. ") 与数字 (" .. digit .. ") 不匹配 (期望: " .. (digit + 1) .. ")")
-                        end
-                    end
-                    
-                    -- 将空格替换为9
+                        -- local space_count = 0
+                        -- for i = 1, #value do
+                        --     if string.sub(value, i, i) == " " then
+                        --         space_count = space_count + 1
+                        --     end
+                        -- end
+
+                        -- 规则：若 key 以數字起始且末尾不是字母，且 (digit - 1) == 空格數，則去掉首位數字作為新 key
+                        -- if digit - 1 == space_count then
+                        --     new_key = string.sub(key, 2)
+                        -- else
+                        --     error("key '" .. key .. " = " .. value .. "' 的空格数量 (" .. space_count .. ") 与数字 (" .. digit .. ") 不匹配 (期望: " .. (digit - 1) .. ")")
+                        -- end
+                    -- end
+
+                    -- 将空格替换为9並轉為數字
                     local processed_value = string.gsub(value, " ", "9")
-                    
-                    -- 尝试转换为整数
                     local num_value = tonumber(processed_value)
                     if num_value == nil then
                         error("无法将字符串 '" .. processed_value .. "' 转换为数字 (原始值: '" .. value .. "')")
                     end
-                    
-                    -- 检查是否溢出（Lua 5.1+ 中数字范围检查）
                     if num_value ~= math.floor(num_value) then
                         error("数字溢出或不是整数: " .. num_value .. " (原始值: '" .. value .. "')")
                     end
-                    
-                    contours[key] = num_value
+
+                    new_contours[new_key] = num_value
                 end
             else
-				error("not string: "..value)
-			end
+                new_contours[key] = value
+            end
         end
+        data.tone_contours[dialect] = new_contours
     end
 end
 
