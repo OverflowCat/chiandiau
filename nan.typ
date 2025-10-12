@@ -103,6 +103,8 @@
   return 1
 }
 
+/// The tone map of each tone, with the second value being
+/// the tone after sandhi. The default is Taipei accent.
 #let nan-tone-map = (
   none, // 0 不定
   (44, 33), // 1 阴平
@@ -163,6 +165,7 @@
     })
 }
 
+/// The wrapper for Tailo / POJ.
 #let nan-tailo = (zh, pron, ..attrs) => {
   let pairs = to-sandhi-pairs(zh, pron).map(pair /* (zh, pron) */ => {
     let characters = pair.at(0).clusters()

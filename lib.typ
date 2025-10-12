@@ -10,6 +10,7 @@
 #import "wuu/wuu.typ": wuu-wugniu
 #import "yue.typ": yue-jyutping
 
+/// This function provides a convenient way to write long annotated paragraphs with a splitter.
 #let easy-split(function, c, splitter: "|", splitter-regex: none, ..attrs) = {
   if splitter-regex == none {
     splitter-regex = splitter

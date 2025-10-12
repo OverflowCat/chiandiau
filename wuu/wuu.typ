@@ -11,9 +11,33 @@
 
 #let fallback-tone-map = ((0,), (0, 0), (0, 0, 0), (0, 0, 0, 0), (0, 0, 0, 0, 0))
 
+/// Convert Wugniu pronunciation with tone sandhi to `(pron, conter)` pairs.
 #let wugniu-sandhi-converter(
   pron,
   tone-map: shanghainese-tone-map,
+  /// one of the following values:
+  /// 
+  /// / `sh`: Shanghai			上海市區方言誌
+  /// / `jd`: Jiading			嘉定方言研究
+  /// / `sj`: Songjiang			松江方言研究
+  /// / `cm`: Chongming			崇明方言研究
+  /// / `cs`: Chuansha			上海地區方言調查研究 + 川沙方言同音字表 + 川沙縣誌
+  /// / `sz`: Suzhou			蘇州方言語音研究
+  /// / `ks`: Kunshan			吳氏：崑山方言研究 + 當代吳語研究
+  /// / `yx`: Yixing			宜興方言同音字彙 + 宜興縣誌
+  /// / `cz`: Changzhou			當代吳語研究
+  /// / `jj`: Jingjiang			靖江縣誌
+  /// / `jx`: Jiaxing			當代吳語研究
+  /// / `tx`: Tongxiang			桐鄉方言誌
+  /// / `hn`: Haining	海寧方言誌
+  /// / `hy`: Haiyan			海鹽方言誌
+  /// / `dq`: Deqing			德清縣誌 + 德清話聲韻調之研究
+  /// / `hz`: Hangzhou			杭州方言音檔 + 杭州方言の聲調
+  /// / `xs`: Xiaoshan			蕭山方言同音字彙 + 蕭山方言研究 + 蕭山市志
+  /// / `sx`: Shaoxing			紹興方言研究
+  /// / `cx`: Cixi				慈溪市誌 + 浙江慈溪方言聲調實驗研究
+  /// / `nb`: Ningbo			當代吳語研究
+  /// / `zs`: Zhoushan			舟山方言兩字組的連讀變調 + 舟山方言研究 + 舟山方言
   loc: none,
 ) = {
   if (pron == none) {
@@ -81,10 +105,15 @@
     })
 } /* returns (pron, conter) */
 
+/// The wrapper for wugniu
+/// -> content
 #let wuu-wugniu(
+  /// -> str
   zh,
+  /// -> str
   pron,
   tone-map: shanghainese-tone-map,
+  /// -> none | str
   loc: none,
   ..attrs,
 ) = {
